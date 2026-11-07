@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "appId": null,
+  "appDisplayName": "CRM Cotizaciones Aislapol",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "96d577cf-bc00-e3bf-bb83-e43a73d98604",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {}
+}
