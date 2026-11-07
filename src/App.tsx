@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './App.css';
 import { mockActivities, mockQuotes, mockUser } from './mocks/homeMocks';
+import { ActivitiesWorkspace, ClientsWorkspace, FieldCommercial, FreightsWorkspace, OpportunitiesWorkspace, OrdersWorkspace, PriceAgreementsWorkspace, ProductsWorkspace, QuotesWorkspace, SalesWorkspace } from './components/CommercialModules';
 
 const areaMenus = {
   comercial: { label: 'Comercial', icon: '◌', items: [
     ['inicio', 'Inicio', '⌂'], ['campo-comercial', 'Campo comercial', '▧'],
-    ['clientes', 'Clientes y seguimiento', '◎'], ['cotizaciones', 'Cotizaciones', '▤'],
+    ['clientes', 'Clientes y seguimiento', '◎'], ['oportunidades', 'Oportunidades', '◇'], ['actividades', 'Actividades y visitas', '◷'], ['cotizaciones', 'Cotizaciones', '▤'],
     ['pedido-360', 'Pedido 360', '◉'], ['pedidos-sap', 'Pedidos SAP', '▣'],
     ['precios', 'Precios acordados', '¤'], ['productos', 'Productos y costos', '◇'],
     ['fletes', 'Tarifas de flete', '⇄'],
@@ -111,7 +112,7 @@ function App() {
               <section className="homeWorkflows" aria-labelledby="home-workflows-title">
                 <div className="homeSectionHeading"><h2 id="home-workflows-title">¿Qué necesitas hacer?</h2><p>Entra por la tarea; las oportunidades y visitas están vinculadas a los clientes.</p></div>
                 <div className="homeWorkflowGrid">
-                  <article className="homeWorkflow"><div><span className="homeWorkflowIndex">Cuenta comercial</span><h3>Clientes y seguimiento</h3><p>Consulta una ficha, registra un negocio y revisa próximas acciones.</p></div><div className="homeWorkflowActions"><button onClick={() => navigate('clientes')}>Abrir clientes</button><button onClick={() => navigate('cotizaciones')}>Resumen comercial</button></div></article>
+                  <article className="homeWorkflow"><div><span className="homeWorkflowIndex">Cuenta comercial</span><h3>Clientes y seguimiento</h3><p>Consulta una ficha, registra un negocio y revisa próximas acciones.</p></div><div className="homeWorkflowActions"><button onClick={() => navigate('clientes')}>Abrir clientes</button><button onClick={() => navigate('ventas')}>Resumen comercial</button></div></article>
                   <article className="homeWorkflow"><div><span className="homeWorkflowIndex">Proceso de venta</span><h3>Cotizaciones</h3><p>Prepara, revisa y consulta las propuestas comerciales.</p></div><div className="homeWorkflowActions"><button onClick={() => navigate('cotizaciones')}>Ver cotizaciones</button><button onClick={() => navigate('cotizaciones')}>Crear nueva</button></div></article>
                   <article className="homeWorkflow"><div><span className="homeWorkflowIndex">Seguimiento de entrega</span><h3>Pedidos SAP</h3><p>Consulta el avance, despacho y facturación de un pedido.</p></div><div className="homeWorkflowActions"><button onClick={() => navigate('pedidos-sap')}>Consultar pedidos</button></div></article>
                 </div>
@@ -129,6 +130,26 @@ function App() {
                 <aside className="card alertsCard"><div className="cardHead"><div><p className="kicker">PRÓXIMOS PASOS</p><h2>Actividades y visitas</h2></div></div>{pendingActivities.map((activity) => <p key={activity.id}>{activity.date} · {activity.subject}</p>)}</aside>
               </section>
             </div>
+          ) : active === 'ventas' ? (
+            <SalesWorkspace onNavigate={navigate} />
+          ) : active === 'campo-comercial' ? (
+            <FieldCommercial />
+          ) : active === 'clientes' ? (
+            <ClientsWorkspace onNavigate={navigate} />
+          ) : active === 'oportunidades' ? (
+            <OpportunitiesWorkspace />
+          ) : active === 'actividades' ? (
+            <ActivitiesWorkspace />
+          ) : active === 'cotizaciones' ? (
+            <QuotesWorkspace onNavigate={navigate} />
+          ) : active === 'pedido-360' || active === 'pedidos-sap' ? (
+            <OrdersWorkspace initialTab={active === 'pedido-360' ? '360' : 'sap'} />
+          ) : active === 'precios' ? (
+            <PriceAgreementsWorkspace />
+          ) : active === 'productos' ? (
+            <ProductsWorkspace />
+          ) : active === 'fletes' ? (
+            <FreightsWorkspace />
           ) : (
             <section className="pendingModule"><p className="kicker">{currentMenu.label}</p><h1>{currentMenu.items.find(([id]) => id === active)?.[1] ?? currentMenu.label}</h1><p>Módulo pendiente de migración</p></section>
           )}
